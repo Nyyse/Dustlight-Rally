@@ -1,9 +1,21 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Dustlight"><meta name="theme-color" content="#1a1420"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Dustlight"><meta name="theme-color" content="#1a1420"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+@media (pointer:coarse){.pkeys{display:none!important}}
+
+/* a light colour grade over the scene: a touch more contrast and colour, so the haze reads as air rather than a veil */
+#gl,#game{filter:contrast(1.07) saturate(1.12)}
+body.lowq #gl,body.lowq #game{filter:none}
+.pedal:not(.on),.hbrake:not(.on),.tb:not(.on){opacity:.72}
+/* reset button sits just under pause on touch screens */
+#h-reset{top:calc(228px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px))}
+@media (max-width:640px){#h-reset{top:calc(118px + env(safe-area-inset-top,0px));right:calc(max(16px,env(safe-area-inset-right,0px)) + 56px)}}
+@media (pointer:coarse) and (orientation:landscape) and (max-height:540px){#h-reset{top:calc(14px + env(safe-area-inset-top,0px));right:calc(max(16px,env(safe-area-inset-right,0px)) + 152px)}}
+body.forceland #h-reset{top:calc(14px + env(safe-area-inset-top,0px));right:calc(max(16px,env(safe-area-inset-right,0px)) + 152px)}
+</style></head><body>
 <title>Dustlight Rally</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Jost:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Italiana&family=Jost:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: a full-bleed painted world; menus float on the left like a rally roadbook, HUD hugs the corners. Single dusk look. */
 :root{
@@ -145,7 +157,13 @@ button:focus-visible,.card:focus-visible{outline:2px solid var(--sun);outline-of
 .prog b{position:absolute;top:-3px;width:2px;height:10px;background:var(--gold);border-radius:2px}
 #h-center{position:absolute;left:50%;top:36%;transform:translate(-50%,-50%);font-family:var(--f-display);font-size:clamp(60px,12vw,150px);text-shadow:0 0 50px rgba(247,178,122,.5);pointer-events:none;white-space:nowrap}
 #h-msg{position:absolute;left:50%;top:22%;transform:translateX(-50%);font-size:13px;letter-spacing:.34em;text-transform:uppercase;text-shadow:0 2px 14px rgba(10,8,20,.6);white-space:nowrap;transition:opacity .4s}
-#h-pause{position:absolute;pointer-events:auto;top:calc(172px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));width:40px;height:40px;border-radius:50%;background:rgba(25,23,38,.45);border:1px solid var(--ink-line);font-family:var(--f-num);font-size:12px;letter-spacing:.05em}
+#h-pause{position:absolute;pointer-events:auto;top:calc(172px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));width:40px;height:40px;border-radius:50%;background:rgba(25,23,38,.45);border:1px solid var(--ink-line);font-family:var(--f-num);font-size:12px;letter-spacing:.05em;color:var(--paper);display:flex;align-items:center;justify-content:center;padding:0;touch-action:manipulation}
+#h-reset{display:none;position:absolute;pointer-events:auto;width:48px;height:48px;border-radius:50%;background:rgba(25,23,38,.45);border:1px solid var(--ink-line);color:var(--paper);align-items:center;justify-content:center;padding:0;touch-action:manipulation;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+#h-pause:active,#h-reset:active{background:rgba(247,178,122,.5)}
+@media (pointer:coarse){
+  #h-pause{width:48px;height:48px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+  #h-reset{display:flex}
+}
 @media (max-width:640px){
   #h-map{width:96px;height:96px}
   #h-pause{top:calc(118px + env(safe-area-inset-top,0px))}
@@ -283,7 +301,8 @@ body.manual .gearbtns{display:flex}
   <div class="bl"><div id="h-surf"></div><div class="prog"><i id="h-prog"></i><b id="h-gprog"></b></div></div>
   <div id="h-msg"></div>
   <div id="h-center"></div>
-  <button id="h-pause" aria-label="Pause">II</button>
+  <button id="h-pause" aria-label="Pause"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.2" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1.2" fill="currentColor"/></svg></button>
+  <button id="h-reset" aria-label="Reset to road"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12a7 7 0 1 0 2.1-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M4 3.5v5h5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 </div>
 <div id="touch" hidden>
   <div class="grp lft">
@@ -648,11 +667,31 @@ const AUD = {
       const N = 28, re = new Float32Array(N), im = new Float32Array(N);
       for (let n = 1; n < N; n++) im[n] = Math.pow(n, -1.3) * (n % 2 ? .55 : 1.25) * (n === 2 ? 1.3 : 1);
       this.wave = ac.createPeriodicWave(re, im);
+      // a narrow pulse train: each cylinder firing is a short shove of exhaust gas, so noise gated by this growls like a pipe
+      const PN = 40, pre = new Float32Array(PN), pim = new Float32Array(PN);
+      for (let n = 1; n < PN; n++) pre[n] = Math.exp(-n * .07);
+      this.pulseWave = ac.createPeriodicWave(pre, pim);
+      // gravel: a loop of thousands of tiny stone impacts of random size, played faster as the car goes faster
+      const gb = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate), gd = gb.getChannelData(0), sr = ac.sampleRate;
+      for (let i = 0; i < gd.length; i++) gd[i] = (Math.random() * 2 - 1) * .05;
+      for (let k = 0; k < 2600; k++) {
+        const at = (Math.random() * gd.length) | 0, a = Math.min(1, .08 / Math.pow(Math.random(), .6)), len = (sr * (.0008 + Math.random() * .004)) | 0;
+        for (let j = 0; j < len && at + j < gd.length; j++) gd[at + j] += (Math.random() * 2 - 1) * a * Math.exp(-j / (len * .3));
+      }
+      let pk = 0; for (let i = 0; i < gd.length; i++) pk = Math.max(pk, Math.abs(gd[i])); for (let i = 0; i < gd.length; i++) gd[i] /= pk;
+      this.gravelBuf = gb;
+      // open-air reverb: a short, dark tail so pops, hits and the engine sit in a place instead of in headphones
+      try {
+        const rl = (sr * 1.1) | 0, ir = ac.createBuffer(2, rl, sr);
+        for (let c = 0; c < 2; c++) { const d2 = ir.getChannelData(c); let lp = 0; for (let i = 0; i < rl; i++) { lp = lp * .6 + (Math.random() * 2 - 1) * .4; d2[i] = lp * Math.pow(1 - i / rl, 3.2) * (i < sr * .012 ? i / (sr * .012) : 1); } }
+        this.verb = ac.createConvolver(); this.verb.buffer = ir; this.verbIn = this.gain(.16); this.verbIn.connect(this.verb); this.verb.connect(this.master);
+      } catch (e) { this.verbIn = null; }
     } catch (e) { this.ac = null; }
   },
   setOn(v) { this.on = v; if (this.master) this.master.gain.setTargetAtTime(v ? this.vol : 0, this.ac.currentTime, .05); },
   setVol(v) { this.vol = v; if (this.master && this.on) this.master.gain.setTargetAtTime(v, this.ac.currentTime, .05); },
   noise() { const s = this.ac.createBufferSource(); s.buffer = this.noiseBuf; s.loop = true; s.start(0, Math.random() * 1.5); return s; },
+  out(node, wet) { node.connect(this.master); if (this.verbIn && wet) { const s = this.gain(wet); node.connect(s); s.connect(this.verbIn); } },
   filt(type, f, q) { const b = this.ac.createBiquadFilter(); b.type = type; b.frequency.value = f; b.Q.value = q || .7; return b; },
   gain(v) { const g = this.ac.createGain(); g.gain.value = v; return g; },
   startEngine(turbo) {
@@ -667,13 +706,26 @@ const AUD = {
     E.am = this.gain(1); E.g = this.gain(0);
     const m1 = this.gain(.32), m2 = this.gain(.26), m3 = this.gain(.34);
     E.o1.connect(m1); E.o2.connect(m2); E.sub.connect(m3); [m1, m2, m3].forEach(m => m.connect(sh));
-    sh.connect(E.lp); E.lp.connect(E.body); E.body.connect(E.am); E.am.connect(E.g); E.g.connect(this.master);
+    sh.connect(E.lp); E.lp.connect(E.body); E.body.connect(E.am); E.am.connect(E.g); this.out(E.g, .35);
+    // the exhaust pipe: a short feedback delay rings at the pipe's length and gives the hollow, metallic edge
+    E.cDel = ac.createDelay(.05); E.cDel.delayTime.value = .0046; E.cFb = this.gain(.42); E.cMix = this.gain(.55);
+    E.body.connect(E.cDel); E.cDel.connect(E.cFb); E.cFb.connect(E.cDel); E.cDel.connect(E.cMix); E.cMix.connect(E.am);
+    // combustion pulses: noise opened and shut at the firing rate, so every bang carries a bit of air and grit
+    E.pn = this.noise(); E.pbp = this.filt('bandpass', 700, .9); E.pg = this.gain(0); E.posc = ac.createOscillator(); E.posc.setPeriodicWave(this.pulseWave); E.pdep = this.gain(0);
+    E.pn.connect(E.pbp); E.pbp.connect(E.pg); E.posc.connect(E.pdep); E.pdep.connect(E.pg.gain); E.pg.connect(E.lp); E.posc.start();
+    // straight-cut rally gearbox: the whine rises with the revs and gets louder off the throttle
+    E.wh = ac.createOscillator(); E.wh.type = 'triangle'; E.whf = this.filt('bandpass', 1200, 3); E.whg = this.gain(0);
+    E.wh.connect(E.whf); E.whf.connect(E.whg); E.whg.connect(this.master); E.wh.start();
+    // the starter cranks, the engine catches
+    this.crank();
     // a slow, irregular wobble on the level makes the idle feel mechanical rather than synthetic
     E.lfo = ac.createOscillator(); E.lfo.type = 'sine'; E.lfoG = this.gain(.08); E.lfo.connect(E.lfoG); E.lfoG.connect(E.am.gain);
     [E.o1, E.o2, E.sub, E.lfo].forEach(o => o.start());
     const mk = (type, f, q) => { const n = this.noise(), fl = this.filt(type, f, q), g = this.gain(0); n.connect(fl); fl.connect(g); g.connect(this.master); return { n, fl, g }; };
     E.intake = mk('bandpass', 1400, .8);
-    E.grav = mk('bandpass', 1500, .55); E.rumble = mk('lowpass', 150, .6); E.wind = mk('bandpass', 420, .35);
+    E.grav = mk('bandpass', 1500, .55);
+    { const gs = ac.createBufferSource(); gs.buffer = this.gravelBuf; gs.loop = true; gs.start(0, Math.random() * 1.8); E.grav.n.disconnect(); E.grav.n.stop(); E.grav.n = gs; gs.connect(E.grav.fl); E.grav.fl.Q.value = .4; }
+    E.rumble = mk('lowpass', 150, .6); E.wind = mk('bandpass', 420, .35);
     E.skid = mk('bandpass', 1050, 7); E.crowd = mk('bandpass', 1000, .45); E.rain = mk('highpass', 3000, .4); E.splash = mk('bandpass', 700, .6);
     E.rasp = mk('bandpass', 2300, 1.6); // exhaust rasp that opens up near the red line
     E.spray = mk('highpass', 2600, .5); E.slosh = mk('lowpass', 260, .8); E.hiss = mk('highpass', 4200, .6);
@@ -687,6 +739,7 @@ const AUD = {
     const E = this.eng; if (!E) return; this.eng = null;
     const t = this.ac.currentTime;
     if (E.g) E.g.gain.setTargetAtTime(0, t, .03);
+    if (E.cFb) setTimeout(() => { try { E.cFb.disconnect(); E.cDel.disconnect(); } catch (e) { } }, 300);
     for (const k of Object.keys(E)) { const v = E[k]; try { if (v && v.stop) v.stop(t + .15); if (v && v.n) v.n.stop(t + .15); } catch (e) { } }
   },
   update(car, cheer, rain, dt) {
@@ -696,6 +749,18 @@ const AUD = {
     E.o1.frequency.setTargetAtTime(f * .5, t, T); E.o2.frequency.setTargetAtTime(f * .5, t, T); E.sub.frequency.setTargetAtTime(f, t, T);
     E.lfo.frequency.setTargetAtTime(3 + rn * 9, t, .2); E.lfoG.gain.setTargetAtTime(.1 * (1 - rn) + .02, t, .2);
     E.lp.frequency.setTargetAtTime(260 + rn * 900 + thr * (500 + rn * 1600), t, .06);
+    // no two combustion cycles are identical: a little pitch scatter, more at idle and on the overrun
+    const jit = (Math.random() - .5) * (thr < .2 ? 9 : 4) * (1.2 - rn);
+    E.o1.detune.setTargetAtTime(-5 + jit, t, .02); E.o2.detune.setTargetAtTime(6 - jit, t, .02);
+    E.posc.frequency.setTargetAtTime(f, t, T);
+    E.pbp.frequency.setTargetAtTime(380 + rn * 1300 + thr * 500, t, .06);
+    const burble = thr < .15 && rn > .25 ? .6 + Math.random() * .8 : 1;
+    E.pdep.gain.setTargetAtTime((.05 + thr * .1 + rn * .05) * burble * (car.shift > 0 ? .4 : 1), t, .03);
+    // a hotter, shorter pipe note as the revs rise
+    E.cDel.delayTime.setTargetAtTime(.0052 - rn * .0016, t, .1); E.cFb.gain.setTargetAtTime(.34 + thr * .14, t, .1);
+    const whF = car.rpm / 60 * 11;
+    E.wh.frequency.setTargetAtTime(whF, t, T); E.whf.frequency.setTargetAtTime(whF, t, T);
+    E.whg.gain.setTargetAtTime(car.air ? 0 : Math.min(1, car.speed / 16) * (.004 + rn * .006) * (thr < .2 ? 1.8 : 1), t, .08);
     const load = car.shift > 0 ? .45 : 1;
     // the rev limiter chops the engine on and off; a misfire drops it for a beat
     this.lim = car.limiter ? (this.lim + 1) % 3 : 0;
@@ -711,7 +776,8 @@ const AUD = {
     }
     const grp = SURF[car.sR].grp, onG = !car.air, loose = grp === 'loose' && onG, snow = grp === 'snow' && onG;
     const crunch = loose ? Math.min(.075, sp * .0024 + car.slipR * .003) * (.8 + Math.random() * .4) : snow ? Math.min(.04, sp * .0014) : 0;
-    E.grav.g.gain.setTargetAtTime(crunch, t, .05);
+    E.grav.g.gain.setTargetAtTime(crunch * 1.5, t, .05);
+    E.grav.n.playbackRate.setTargetAtTime(clamp(.45 + sp / 28 + car.slipR * .02, .45, 1.9), t, .1);
     E.grav.fl.frequency.setTargetAtTime(snow ? 800 : car.sR === 'sand' ? 1000 : car.sR === 'mud' ? 600 : 1500, t, .15);
     E.rumble.g.gain.setTargetAtTime(onG ? Math.min(.11, sp * .003) : 0, t, .08);
     // wind rush: rises with the square of speed, opens up brighter, and gusts a little
@@ -746,12 +812,12 @@ const AUD = {
     if (!this.ac) return; const ac = this.ac, t = ac.currentTime, o = ac.createOscillator(), g = this.gain(0);
     o.type = type || 'sine'; o.frequency.setValueAtTime(freq, t); if (slide) o.frequency.exponentialRampToValueAtTime(slide, t + dur);
     g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol || .1, t + .012); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
-    o.connect(g); g.connect(this.master); o.start(t); o.stop(t + dur + .03);
+    o.connect(g); this.out(g, .5); o.start(t); o.stop(t + dur + .03);
   },
   burst(f, q, dur, vol, type) {
     if (!this.ac) return; const ac = this.ac, t = ac.currentTime, n = this.noise(), fl = this.filt(type || 'bandpass', f, q), g = this.gain(0);
     g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .008); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
-    n.connect(fl); fl.connect(g); g.connect(this.master); n.stop(t + dur + .03);
+    n.connect(fl); fl.connect(g); this.out(g, .6); n.stop(t + dur + .03);
   },
   // a pass-by: air shoved aside by something close to the car, panned to its side and falling in pitch
   whoosh(pan, v, big) {
@@ -763,7 +829,21 @@ const AUD = {
     if (ac.createStereoPanner) { const p = ac.createStereoPanner(); p.pan.value = clamp(pan, -1, 1); g.connect(p); p.connect(this.master); } else g.connect(this.master);
     n.stop(t + dur + .05);
   },
-  pop() { this.burst(700 + Math.random() * 400, 1.2, .06, .05); if (Math.random() < .5) this.blip(80, .06, 'sine', .04, 50); },
+  pop() {
+    if (!this.ac) return; const ac = this.ac, t = ac.currentTime, v = .6 + Math.random() * .4;
+    // a sharp crack, a low chest-thump and a short tail in the reverb
+    const n = this.noise(), hp = this.filt('highpass', 900 + Math.random() * 800, .5), g = this.gain(0);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.16 * v, t + .002); g.gain.exponentialRampToValueAtTime(.0001, t + .05);
+    n.connect(hp); hp.connect(g); this.out(g, 1.4); n.stop(t + .08);
+    this.blip(70 + Math.random() * 30, .09, 'sine', .07 * v, 40);
+    if (Math.random() < .35) setTimeout(() => this.burst(1400, 1, .04, .05 * v, 'bandpass'), 30 + Math.random() * 40); // a second, smaller pop
+  },
+  // starter motor: a few uneven cranks, then the engine catches with a short rev
+  crank() {
+    if (!this.ac) return;
+    for (let k = 0; k < 5; k++) setTimeout(() => { this.burst(160 + Math.random() * 40, 1.4, .09, .05, 'lowpass'); this.blip(42, .08, 'sine', .04, 36); }, k * (95 + Math.random() * 20));
+    setTimeout(() => { this.burst(500, .9, .2, .07, 'lowpass'); this.blip(65, .3, 'sawtooth', .025, 140); }, 520);
+  },
   // impacts sound like what was hit: straw thumps, timber knocks, stone crunches, posts snap
   hit(i, kind) {
     const v = Math.min(1, i / 10);
@@ -1973,7 +2053,7 @@ function initRender() {
 }
 function resizeRender() {
   R.W = viewW(); R.H = viewH();
-  R.dpr = Math.min(devicePixelRatio || 1, R.q === 'high' ? 2 : 1.25);
+  R.dpr = Math.max(1, Math.min(devicePixelRatio || 1, R.q === 'high' ? 2 : 1.25) * (R.ds || 1));
   R.cv.width = Math.round(R.W * R.dpr); R.cv.height = Math.round(R.H * R.dpr);
   R.shadow = mkCanvas(R.W * .5, R.H * .5); R.shx = R.shadow.getContext('2d');
   R.light = mkCanvas(R.W * .5, R.H * .5); R.lix = R.light.getContext('2d');
@@ -3766,8 +3846,7 @@ function cglLights(night, rx) {
 function cglDrawCar(car, spec, liv, opts) {
   const gl = CGL.gl, mesh = cglMesh(spec.id), wheel = cglMesh('_wheel');
   if (!mesh || !wheel) return null;
-  const dpr = Math.min(R.dpr, 1.5), W = Math.round(R.W * dpr), H = Math.round(R.H * dpr);
-  if (CGL.cv.width !== W || CGL.cv.height !== H) { CGL.cv.width = W; CGL.cv.height = H; }
+  const dpr = Math.min(R.dpr, 2), W = Math.round(R.W * dpr), H = Math.round(R.H * dpr);
   // screen box from the car's corners
   const hl = spec.s.L / 2 + .5, hw = spec.s.W / 2 + .4, ch = Math.cos(car.h), sh = Math.sin(car.h), z0 = car.z || 0;
   let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9, dmin = 1e9;
@@ -3778,8 +3857,12 @@ function cglDrawCar(car, spec, liv, opts) {
   x0 = Math.floor(clamp(x0 - 4, 0, R.W)); y0 = Math.floor(clamp(y0 - 4, 0, R.H)); x1 = Math.ceil(clamp(x1 + 4, 0, R.W)); y1 = Math.ceil(clamp(y1 + 4, 0, R.H));
   if (x1 - x0 < 2 || y1 - y0 < 2 || dmin < 1) return null;
   const sx = Math.floor(x0 * dpr), sy = Math.floor(y0 * dpr), sw = Math.ceil((x1 - x0) * dpr), shh = Math.ceil((y1 - y0) * dpr);
-  gl.viewport(0, 0, W, H);
-  gl.enable(gl.SCISSOR_TEST); gl.scissor(sx, H - sy - shh, sw, shh);
+  // the buffer only holds the car's box (grown in 64 px steps, never every frame), so the
+  // copy into the 2D canvas and the MSAA resolve stay small. That copy is the costly part on phones.
+  if (CGL.cv.width < sw || CGL.cv.height < shh) { CGL.cv.width = Math.max(CGL.cv.width, Math.ceil(sw / 64) * 64); CGL.cv.height = Math.max(CGL.cv.height, Math.ceil(shh / 64) * 64); }
+  const CW = CGL.cv.width, CHh = CGL.cv.height;
+  gl.viewport(-sx, CHh - H + sy, W, H);
+  gl.enable(gl.SCISSOR_TEST); gl.scissor(0, CHh - shh, sw, shh);
   gl.clearColor(0, 0, 0, 0); gl.clearDepth(1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   gl.enable(gl.DEPTH_TEST); gl.depthFunc(gl.LEQUAL); gl.disable(gl.CULL_FACE); gl.disable(gl.BLEND);
   const P = CGL.P; gl.useProgram(P.p);
@@ -3821,7 +3904,7 @@ function cglDrawCar(car, spec, liv, opts) {
     gl.uniformMatrix4fv(P.u.uM, false, Wl); gl.drawArrays(gl.TRIANGLES, 0, wheel.n);
   }
   gl.bindVertexArray(null); gl.disable(gl.SCISSOR_TEST);
-  return { sx, sy, sw, sh: shh, dx: sx / dpr, dy: sy / dpr, dw: sw / dpr, dh: shh / dpr };
+  return { sx: 0, sy: 0, sw, sh: shh, dx: sx / dpr, dy: sy / dpr, dw: sw / dpr, dh: shh / dpr };
 }
 
 function drawCarGL(ctx, car, spec, liv, opts) {
@@ -3919,6 +4002,8 @@ function updateParts(dt) {
     }
   }
 }
+// the car keeps a clear window in its own dust, so the hero never vanishes into the cloud it throws up
+const PCLR = { x: 0, y: 0, d: 0, r: 0 };
 function drawParts(ctx) {
   const x0 = GND.box[0] - 20, x1 = GND.box[2] + 20, y0 = GND.box[1] - 20, y1 = GND.box[3] + 20;
   for (const p of PTS) {
@@ -3926,7 +4011,9 @@ function drawParts(ctx) {
     const t = p.life / p.max;
     proj(p.x, p.y, p.z, _p);
     if (p.k === 0) {
-      const s = p.size * cam.ppm * _p[2], fade = Math.min(1, (1 - t) * 14) * Math.pow(t, .7) * clamp((R.H * 1.05 - _p[1]) / (R.H * .35), .25, 1);
+      const s = p.size * cam.ppm * _p[2];
+      let fade = Math.min(1, (1 - t) * 14) * Math.pow(t, .7) * clamp((R.H * 1.05 - _p[1]) / (R.H * .35), .25, 1);
+      if (PCLR.r && _p[3] < PCLR.d + 1.5) { const dd = Math.hypot(_p[0] - PCLR.x, _p[1] - PCLR.y) / (PCLR.r + s * .6); if (dd < 1) fade *= .22 + .78 * dd * dd; }
       ctx.globalAlpha = p.a * fade; ctx.drawImage(softSprite(p.col), _p[0] - s, _p[1] - s, s * 2, s * 2);
     } else if (p.k === 2) {
       const s = p.size * cam.ppm * _p[2]; ctx.globalAlpha = p.a * t;
@@ -4315,6 +4402,7 @@ function drawWorld(t, car, ghost, carSpec, liv, ghostSpec) {
     }
   }
   ctx.globalAlpha = 1; xreset(ctx);
+  if (car) { proj(car.x, car.y, .7, _p); PCLR.x = _p[0]; PCLR.y = _p[1]; PCLR.d = _p[3]; PCLR.r = Math.max(18, cam.ppm * _p[2] * 2.6); } else PCLR.r = 0;
   drawParts(ctx);
   if (car) drawStreaks(ctx, car, t);
   drawCarGlows(ctx, ghost, true, t); drawCarGlows(ctx, car, false, t);
@@ -5215,7 +5303,8 @@ function updateCamera(dt) {
   const lagT = clamp((cam.acc - cam.accS) * .028 + cam.acc * .004, -.07, .15);
   cam.lagV = (cam.lagV || 0) + ((lagT - (cam.lag || 0)) * 38 - (cam.lagV || 0) * 7.5) * dt;
   cam.lag = (cam.lag || 0) + cam.lagV * dt;
-  const dt2 = mode.dist * aspect * (1 + Math.min(.22, sp / 150)) * (1 + intro * .6);
+  const phoneZ = Math.min(R.W, R.H) < 520 && (R.coarse ??= matchMedia('(pointer:coarse)').matches) ? .84 : 1; // a phone screen is small: bring the car closer
+  const dt2 = mode.dist * aspect * phoneZ * (1 + Math.min(.22, sp / 150)) * (1 + intro * .6);
   cam.distB = cam.distB || cam.dist; cam.distB += (dt2 - cam.distB) * (1 - Math.exp(-dt * 2.6));
   cam.dist = cam.distB * (1 + cam.lag);
   // speed feel: the lens widens with speed and kicks wider still when the car squats under power
@@ -5383,6 +5472,10 @@ function adaptDetail(dt) {
   if (R.ftT < 1500) return;
   const avg = R.ftT / R.ftN; R.ftT = 0; R.ftN = 0;
   if (avg > 21) R.gs = Math.max(.3, R.gs * .82); else if (avg < 15.5) R.gs = Math.min(1, R.gs * 1.06);
+  // still slow with the ground at its lightest: render fewer pixels (dynamic resolution); win them back slowly
+  const ds = R.ds || 1;
+  if (avg > 22 && R.gs <= .45 && ds > .6) { R.ds = Math.max(.6, ds * .85); resizeRender(); }
+  else if (avg < 13 && R.gs >= .95 && ds < 1) { R.ds = Math.min(1, ds * 1.08); resizeRender(); }
 }
 function frame(now) {
   const dt = Math.min(.05, (now - (GAME.last || now)) / 1000); GAME.last = now; GAME.t += dt;
@@ -5606,7 +5699,7 @@ const UI = {
     this.set(`<div class="screen" data-act="go" data-focus tabindex="-1" style="cursor:pointer"><div class="title-wrap" style="margin-bottom:6vh">
       <div class="eyebrow">Top-down rallying through light, dust and weather</div>
       <h1 class="brand">Dustlight<em>Rally</em></h1>
-      <div class="press">Press any key</div></div></div>`, null, { go: () => this.main() });
+      <div class="press">${matchMedia('(pointer:coarse)').matches ? 'Tap to start' : 'Press any key'}</div></div></div>`, null, { go: () => this.main() });
     const k = e => { if (this.el.querySelector('.brand') && GAME.mode === 'menu') { removeEventListener('keydown', k); this.main(); } };
     addEventListener('keydown', k);
   },
@@ -5823,7 +5916,7 @@ const UI = {
       set: a => {
         const [k, v] = a.split(':'); s[k] = v === 'true' ? true : v === 'false' ? false : isNaN(+v) ? v : +v;
         if (k === 'tilt') document.body.classList.toggle('no-tilt', !s.tilt);
-        if (k === 'quality') { R.q = s.quality; R.gs = 1; resizeRender(); }
+        if (k === 'quality') { R.q = s.quality; R.gs = 1; R.ds = 1; document.body.classList.toggle('lowq', R.q !== 'high'); resizeRender(); }
         if (k === 'sound') AUD.setOn(s.sound);
         if (k === 'vol') AUD.setVol(s.vol);
         writeSave(); this.settings();
@@ -5995,11 +6088,12 @@ const UI = {
   pause() {
     this.set(`<div class="screen" style="background:rgba(16,12,26,.45)"><div class="overlay-center panel" style="display:flex;flex-direction:column;gap:14px">
       <div class="eyebrow">${esc(RACE.ev.name)}</div><div class="h2">Paused</div>
-      <div class="cols"><button class="cta" data-act="resume" data-focus>Resume</button>${FL.on ? '<button class="ghostbtn" data-act="flip">Flip screen</button>' : ''}${RACE.rally ? '<button class="ghostbtn" data-act="retire">Retire from stage</button>' : '<button class="ghostbtn" data-act="restart">Restart</button><button class="ghostbtn" data-act="quit">Leave stage</button>'}</div>
+      <div class="cols"><button class="cta" data-act="resume" data-focus>Resume</button><button class="ghostbtn" data-act="reset">Reset to road${RACE.ev.type !== 'roam' ? ' (+2 s)' : ''}</button>${FL.on ? '<button class="ghostbtn" data-act="flip">Flip screen</button>' : ''}${RACE.rally ? '<button class="ghostbtn" data-act="retire">Retire from stage</button>' : '<button class="ghostbtn" data-act="restart">Restart stage</button><button class="ghostbtn" data-act="quit">Leave stage</button>'}</div>
       ${RACE.rally ? '<p class="muted" style="margin:0">In a rally there are no restarts. Retiring books the stage at a heavy penalty time and the rally goes on.</p>' : ''}
-      <div class="keys" style="margin-top:6px"><kbd>R</kbd><span>Reset to the road</span><kbd>G</kbd><span>Ghost ${SV.settings.ghost ? 'on' : 'off'}</span><kbd>Space</kbd><span>Handbrake</span></div>
+      <div class="keys pkeys" style="margin-top:6px"><kbd>R</kbd><span>Reset to the road</span><kbd>G</kbd><span>Ghost ${SV.settings.ghost ? 'on' : 'off'}</span><kbd>Space</kbd><span>Handbrake</span></div>
     </div></div>`, () => togglePause(), {
       resume: () => togglePause(),
+      reset: () => { togglePause(); if (RACE && RACE.st === 'run') resetCar(); },
       flip: () => { setForceLand(true, FL.dir === 90 ? 270 : 90); },
       restart: () => { const r = RACE; quitRace(); startRace(r.ev, r.carId, r.tyre); },
       quit: () => { const ev = RACE.ev; quitRace(); this.prerace(ev); },
@@ -6165,13 +6259,16 @@ Object.assign(UI, {
 // ---------- boot ----------
 function boot() {
   loadSave();
-  R.q = SV.settings.quality || 'high';
+  R.q = SV.settings.quality || 'high'; document.body.classList.toggle('lowq', R.q !== 'high');
+  // phones with very dense screens: start at 1.6x instead of 2x (hard to see, about a third fewer pixels to paint)
+  if (matchMedia('(pointer:coarse)').matches && (devicePixelRatio || 1) >= 2.5) R.ds = .8;
   initRender(); try { initGL(); } catch (e) { GL.ok = false; } try { initCarGL(); } catch (e) { CGL.ok = false; } UI.init(); bindTouch(); TILT.init();
   document.getElementById('rot-go').addEventListener('click', () => playSideways());
   document.getElementById('rot-flip').addEventListener('click', () => playSideways((TILT.gx || 0) > .3 ? 90 : 270));
   document.body.classList.toggle('no-tilt', !SV.settings.tilt);
   AUD.on = SV.settings.sound !== false; AUD.vol = SV.settings.vol || .7;
   document.getElementById('h-pause').addEventListener('click', () => togglePause());
+  document.getElementById('h-reset').addEventListener('click', e => { e.preventDefault(); resetCar(); });
   document.addEventListener('visibilitychange', () => { if (document.hidden && RACE && (RACE.st === 'run' || RACE.st === 'countdown')) togglePause(); });
   window.claude?.hot?.snapshot?.(() => ({ save: true }));
   UI.title();
